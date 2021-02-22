@@ -158,15 +158,27 @@ Perform a simulation to compute this empirical probability.
 Write down your guess to the answer before you calculate it.
 
 ```{r simulate_rolls}
-
+dice <- c(1, 2, 3, 4, 5, 6)
+two_roll_results <- tibble(
+  roll_1 = sample(dice, size = 10000, replace = TRUE),
+  roll_2 = sample(dice, size = 10000, replace = TRUE)
+)
+two_roll_results
 ```
 
-```{r identify_events}
-
+```{r}
+two_roll_results <- two_roll_results %>% 
+  mutate(roll_match = (roll_1 ^ 2 == roll_2),
+  absVal = abs(roll_1 - roll_2) == 4)
+two_roll_results
 ```
+
+
 
 ```{r summarize_rolls}
-
+two_roll_results %>%
+  summarise(event_1 = mean(roll_match),
+            event_2 = mean(absVal))
 ```
 
 ## Additional Resources-please look at before Weds.
